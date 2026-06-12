@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="38%" r="80%">
+      <stop offset="0%" stop-color="#3c342a"/>
+      <stop offset="100%" stop-color="#0f0b08"/>
+    </radialGradient>
+    <pattern id="p" width="96" height="96" patternUnits="userSpaceOnUse">
+      <circle cx="48" cy="48" r="30" fill="none" stroke="#d8c3a5" stroke-opacity="0.14"/>
+      <circle cx="0" cy="0" r="30" fill="none" stroke="#d8c3a5" stroke-opacity="0.14"/>
+      <circle cx="96" cy="0" r="30" fill="none" stroke="#d8c3a5" stroke-opacity="0.14"/>
+      <circle cx="0" cy="96" r="30" fill="none" stroke="#d8c3a5" stroke-opacity="0.14"/>
+      <circle cx="96" cy="96" r="30" fill="none" stroke="#d8c3a5" stroke-opacity="0.14"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <rect width="800" height="800" fill="url(#p)"/>
+  <g transform="translate(400 400)" fill="none" stroke="#d8c3a5">
+    <circle r="145" stroke-width="2.5"/>
+    <circle r="100" stroke-width="1.5" stroke-opacity="0.7"/>
+    <path d="M0 -145 L0 145 M-145 0 L145 0 M-102 -102 L102 102 M-102 102 L102 -102" stroke-width="1" stroke-opacity="0.6"/>
+    <circle r="11" fill="#d8c3a5" stroke="none"/>
+  </g>
+</svg>
