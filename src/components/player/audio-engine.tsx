@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import H5AudioPlayer from "react-h5-audio-player";
 
+import { getStreamUrl } from "@/lib/audio";
 import { usePlayerStore } from "@/store/player-store";
 
 /**
@@ -80,7 +81,7 @@ export default function AudioEngine() {
     <div hidden>
       <H5AudioPlayer
         ref={playerRef}
-        src={currentTrack.audioUrl}
+        src={getStreamUrl(currentTrack)}
         autoPlayAfterSrcChange={isPlaying}
         preload="metadata"
         listenInterval={500}

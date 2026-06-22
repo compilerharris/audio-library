@@ -16,6 +16,33 @@ export function getThumbnail(track: AudioTrack): string {
   return track.thumbnail || `/covers/cover-${(track.id % COVER_COUNT) + 1}.svg`;
 }
 
+/**
+ * Pulls the Google Drive file id out of any of the common URL shapes:
+ *  - https://drive.google.com/uc?export=download&id=FILE_ID
+ *  - https://drive.google.com/file/d/FILE_ID/view
+ *  - a bare FILE_ID
+ * Returns null for non-Drive URLs (e.g. a CDN/S3 link), so they pass through.
+ */
+export function extractDriveId(audioUrl: string): string | null {
+  if (!audioUrl) return null;
+  const byQuery = audioUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (byQuery) return byQuery[1];
+  const byPath = audioUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (byPath) return byPath[1];
+  if (/^[a-zA-Z0-9_-]{10,}$/.test(audioUrl)) return audioUrl;
+  return null;
+}
+
+/**
+ * The URL the audio element should load. Drive files go through our
+ * streaming proxy (range support, scan-page bypass); any other URL is
+ * used as-is so the app also works with a CDN or static host later.
+ */
+export function getStreamUrl(track: AudioTrack): string {
+  const id = extractDriveId(track.audioUrl);
+  return id ? `/api/audio/${id}` : track.audioUrl;
+}
+
 /** Human-readable duration, e.g. "1 hr 23 min" or "45 min". */
 export function formatDuration(seconds: number): string {
   const hours = Math.floor(seconds / 3600);

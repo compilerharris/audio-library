@@ -24,13 +24,16 @@ export function Waveform({ playing = false, bars = 28, className }: WaveformProp
       className={cn("flex h-10 items-end gap-[3px]", className)}
     >
       {Array.from({ length: bars }, (_, i) => {
-        const height = 0.25 + Math.abs(Math.sin(i * 2.4 + 1.3)) * 0.75;
+        // Rounded to a fixed precision so the SSR string and the value
+        // Framer Motion writes on the client are byte-identical (avoids
+        // a hydration mismatch from float formatting differences).
+        const height = (0.25 + Math.abs(Math.sin(i * 2.4 + 1.3)) * 0.75) * 100;
         const dip = 0.35 + ((i * 7) % 10) / 25;
         return (
           <motion.span
             key={i}
-            className="w-[3px] rounded-full bg-gradient-to-t from-bronze via-gold to-gold-bright"
-            style={{ height: `${height * 100}%`, transformOrigin: "bottom" }}
+            className="w-[3px] origin-bottom rounded-full bg-gradient-to-t from-bronze via-gold to-gold-bright"
+            style={{ height: `${height.toFixed(2)}%` }}
             animate={animate ? { scaleY: [1, dip, 1] } : { scaleY: 1 }}
             transition={
               animate
